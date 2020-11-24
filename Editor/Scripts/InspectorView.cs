@@ -120,7 +120,12 @@ namespace Utj.UnityChoseKun
 
 
         public InspectorView() {
+ #if UNITY_2019_3_OR_NEWER
             if (!EditorWindow.HasOpenInstances<PlayerHierarchyWindow>())
+#else
+            UnityEngine.Object[] wins = Resources.FindObjectsOfTypeAll(typeof(PlayerHierarchyWindow));
+            if (! (wins != null && wins.Length > 0))
+#endif
             {
                 PlayerHierarchyWindow.Create();
             }
@@ -216,7 +221,12 @@ namespace Utj.UnityChoseKun
                 gameObjectKuns.Add(sceneKun.gameObjectKuns[i].instanceID,sceneKun.gameObjectKuns[i]);
             }
 
+#if UNITY_2019_3_OR_NEWER
             if (!EditorWindow.HasOpenInstances<PlayerHierarchyWindow>())
+#else
+            UnityEngine.Object[] wins = Resources.FindObjectsOfTypeAll(typeof(PlayerHierarchyWindow));
+            if (! (wins != null && wins.Length > 0))
+#endif
             {
                 PlayerHierarchyWindow.Create();
             }

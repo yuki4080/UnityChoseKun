@@ -160,11 +160,17 @@
             RuntimePlatform platform = RuntimePlatform.WindowsEditor;
             Texture2D texture = null;
 
-            if (EditorWindow.HasOpenInstances<UnityChoseKunEditorWindow>()){
-                var chosekunEdotorWindow = (UnityChoseKunEditorWindow)EditorWindow.GetWindow(typeof(UnityChoseKunEditorWindow));
-                if (chosekunEdotorWindow != null)
+#if UNITY_2019_3_OR_NEWER
+            if (EditorWindow.HasOpenInstances<UnityChoseKunEditorWindow>())
+#else
+            UnityEngine.Object[] wins = Resources.FindObjectsOfTypeAll(typeof(UnityChoseKunEditorWindow));
+            if (wins != null && wins.Length > 0)
+#endif
+            {
+                var chosekunEditorWindow = (UnityChoseKunEditorWindow)EditorWindow.GetWindow(typeof(UnityChoseKunEditorWindow));
+                if (chosekunEditorWindow != null)
                 {
-                    platform = chosekunEdotorWindow.GetRuntimePlatform();
+                    platform = chosekunEditorWindow.GetRuntimePlatform();
                 }
             }
 
